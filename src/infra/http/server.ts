@@ -18,6 +18,8 @@ app.use(routes);
 
 app.use(errorHandler);
 
+prisma.user.findMany().then(res => console.log(res));
+
 const PORT = process.env.PORT || "3333";
 app.listen(PORT, () => {
     console.log("Server listen on http://localhost:" + PORT);

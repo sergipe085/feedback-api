@@ -37,7 +37,7 @@ export class LoginUseCase {
         }
 
         const token = sign({
-            nickname: user.nickname,
+            name: user.name,
             email: user.email
         }, process.env.JWT_SECRET ?? "");
 

@@ -1,19 +1,15 @@
 import { User } from "../entities/user"; 
 
 interface IUserInfra {
-    id: number;
-    nickname: string;
+    id: string;
+    name: string;
     email: string;
-    gemmes: number;
-    subscription_level: number;
 }
 
 export function UserAppToInfra(user: User): IUserInfra {
     return {
-        id: user.id ?? -1,
-        nickname: user.nickname,
+        id: user.id ?? "",
+        name: user.name,
         email: user.email,
-        gemmes: user.gemmes,
-        subscription_level: user.subscription_level
     }
 }

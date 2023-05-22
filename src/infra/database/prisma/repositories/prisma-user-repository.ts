@@ -4,10 +4,10 @@ import { DomainToPrisma, PrismaToDomain } from "../../../../utils/mappers/user-m
 import prisma from "..";
 
 export class PrismaUserRepository extends UserRepository {
-    async findByNickname(nickname: string): Promise<User | null> {
-        const user = await prisma.pLAYERS_DATA.findFirst({
+    async findByNickname(name: string): Promise<User | null> {
+        const user = await prisma.user.findFirst({
             where: {
-                Nickname: nickname
+                name: name
             }
         })
 
@@ -18,9 +18,9 @@ export class PrismaUserRepository extends UserRepository {
         return PrismaToDomain(user);
     }
     async findByEmail(email: string): Promise<User | null> {
-        const user = await prisma.pLAYERS_DATA.findFirst({
+        const user = await prisma.user.findFirst({
             where: {
-                Email: email
+                email: email
             }
         })
 
@@ -31,10 +31,10 @@ export class PrismaUserRepository extends UserRepository {
         return PrismaToDomain(user);
     }
 
-    async findById(id: number): Promise<User | null> {
-        const user = await prisma.pLAYERS_DATA.findFirst({
+    async findById(id: string): Promise<User | null> {
+        const user = await prisma.user.findFirst({
             where: {
-                Id: Number(id)
+                id: id
             }
         })
 
@@ -45,14 +45,11 @@ export class PrismaUserRepository extends UserRepository {
         return PrismaToDomain(user);
     }
     async save(user: User): Promise<User> {
-        const newUser = await prisma.pLAYERS_DATA.create({
+        const newUser = await prisma.user.create({
             data: {
-                CreationDate: new Date(),
-                Email: user.email,
-                Gemmes: user.gemmes,
-                Nickname: user.nickname,
-                Password: user.password_hash,
-                Salt: user.salt
+                email: user.email,
+                name: user.name,
+                password: user.password_hash,
             }
         })
 
@@ -60,9 +57,9 @@ export class PrismaUserRepository extends UserRepository {
     }
 
     async update(user: User): Promise<User> {
-        const userUpdated = await prisma.pLAYERS_DATA.update({
+        const userUpdated = await prisma.user.update({
             where: {
-                Email: user.email
+                id: user.id
             },
             data: DomainToPrisma(user)
         });

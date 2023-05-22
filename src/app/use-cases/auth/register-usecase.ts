@@ -6,7 +6,7 @@ import { AppError } from "../../../infra/http/errors/app-error";
 import { UserAppToInfra } from "../../mappers/user_app_mapper";
 
 interface IRegisterUseCaseProps {
-    nickname: string;
+    name: string;
     email: string;
     password: string;
 }
@@ -14,8 +14,8 @@ interface IRegisterUseCaseProps {
 export class RegisterUseCase {
     constructor(private userRepository: UserRepository) {}
 
-    async execute({ nickname, email, password }: IRegisterUseCaseProps) {
-        const nicknameValidation = new FieldValidation(nickname, "nickname");
+    async execute({ name, email, password }: IRegisterUseCaseProps) {
+        const nicknameValidation = new FieldValidation(name, "nickname");
         nicknameValidation.checkNull();
         nicknameValidation.checkString();
 
@@ -34,7 +34,7 @@ export class RegisterUseCase {
             throw new AppError("user already exists", 404);
         }
 
-        userExists = await this.userRepository.findByNickname(nickname);
+        userExists = await this.userRepository.findByNickname(name);
 
         if (userExists) {
             throw new AppError("user already exists", 404);
@@ -43,7 +43,7 @@ export class RegisterUseCase {
         const passwordHash = hashSync(password, 4);
 
         var newUser = new User({
-            nickname,
+            name,
             email,
             password: passwordHash
         });

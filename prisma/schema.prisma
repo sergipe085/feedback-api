@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -20,5 +20,5 @@ model feedback {
   user    user   @relation(fields: [user_id], references: [id])
   user_id String
   note    Int
-  obs     String @db.LongText
+  obs     String @db.VarChar(500)
 }

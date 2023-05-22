@@ -20,12 +20,12 @@ auth_routes.post("/login", async (req, res) => {
 });
 
 auth_routes.post("/register", async (req, res) => {
-    const { nickname, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     const registerUseCase = new RegisterUseCase(userRepository);
 
     const response = await registerUseCase.execute({
-        nickname,
+        name,
         email,
         password
     });
