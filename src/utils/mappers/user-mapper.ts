@@ -3,6 +3,7 @@ import { user as UserPrisma } from "@prisma/client"
 
 export function PrismaToDomain(userPrisma: UserPrisma): UserDomain {
     const user = new UserDomain({ 
+        id: userPrisma.id,
         name: userPrisma.name,
         email: userPrisma.email,
         password: userPrisma.password

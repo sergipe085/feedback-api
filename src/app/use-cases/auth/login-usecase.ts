@@ -36,6 +36,9 @@ export class LoginUseCase {
             throw new AppError("user does not exists", 404);
         }
 
+        console.log("LOGIN USER")
+        console.log(user)
+
         const token = sign({
             name: user.name,
             email: user.email
