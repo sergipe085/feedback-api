@@ -15,7 +15,7 @@ export class FieldValidation {
         }
     }
 
-    checkLength(length: Number) {
+    checkLength(length: number) {
         this.checkString();
 
         if ((this.field_value as String).length < length) {

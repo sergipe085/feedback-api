@@ -1,6 +1,6 @@
-import { Feedback } from "@entities/feedback";
+import { Response } from "../entities/feedback/response";
 
-export abstract class FeedbackRepository {
-    abstract save(feedback: Feedback): Promise<Feedback>;
-    abstract findAll(): Promise<Feedback[]>;
+export abstract class ResponseRepository {
+    abstract save(response: Response): Promise<Response>;
+    abstract findAll(): Promise<Response[]>;
 }
