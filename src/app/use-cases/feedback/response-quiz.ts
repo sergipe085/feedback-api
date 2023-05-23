@@ -1,9 +1,9 @@
 import { InterviewRepository } from "../../repositories/interview-repository";
 import { Question } from "../../entities/feedback/question";
 import { Response } from "../../entities/feedback/response";
-import { FeedbackRepository } from "../../repositories/feedback-repository";
 import { QuestionRepository } from "../../repositories/question-repository";
 import { Interview } from "../../entities/feedback/interview";
+import { ResponseRepository } from "../../repositories/response-repository";
 
 interface IResponseQuizUseCase {
     responses: [
@@ -17,10 +17,13 @@ interface IResponseQuizUseCase {
 
 export class ResponseQuiz {
     constructor(private interviewRepository: InterviewRepository,
-                private questionRepository: QuestionRepository) {}
+                private questionRepository: QuestionRepository,
+                private responseRepository: ResponseRepository) {}
 
     async execute({ responses }: IResponseQuizUseCase) {
         const interview = await this.interviewRepository.save(new Interview({}));
+
+        const saved_responses = [] as Response[]
 
         for (var i = 0; i < responses.length; i++) {
             const response = new Response({
@@ -30,10 +33,14 @@ export class ResponseQuiz {
                 question_id: responses[i].question_id
             })
 
-            console.log(response);
+            const saved_response = await this.responseRepository.save(response);
+
+            saved_responses.push(saved_response);
         }
 
         
-        return {"test": "ok"};
+        return {
+            saved_responses
+        };
     }
 }

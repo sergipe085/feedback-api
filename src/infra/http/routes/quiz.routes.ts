@@ -4,11 +4,13 @@ import { AddQuestion } from "../../../app/use-cases/feedback/add-question";
 import { PrismaInterviewRepository } from "../../database/prisma/repositories/prisma-interview-repository";
 import { PrismaQuestionRepository } from "../../database/prisma/repositories/prisma-question-repository";
 import { ResponseQuiz } from "../../../app/use-cases/feedback/response-quiz";
+import { PrismaResponseRepository } from "../../database/prisma/repositories/prisma-response-repository";
 
 const quiz_routes = Router();
 
 const interviewRepository = new PrismaInterviewRepository();
 const questionRepository = new PrismaQuestionRepository();
+const responseRepository = new PrismaResponseRepository();
 
 quiz_routes.post("/add-question", middlewares.useAuth, async (req, res) => {
     const { content } = req.body;
@@ -23,7 +25,7 @@ quiz_routes.post("/add-question", middlewares.useAuth, async (req, res) => {
 quiz_routes.post("/response", async (req, res) => {
     const { responses } = req.body;
 
-    const response_quiz = new ResponseQuiz(interviewRepository, questionRepository);
+    const response_quiz = new ResponseQuiz(interviewRepository, questionRepository, responseRepository);
 
     const response = await response_quiz.execute({ responses });
 
