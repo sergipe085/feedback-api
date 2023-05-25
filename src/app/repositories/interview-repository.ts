@@ -1,4 +1,4 @@
-import { Interview } from "@entities/feedback/interview";
+import { Interview } from "../entities/feedback/interview";
 
 export abstract class InterviewRepository {
     abstract save(interview: Interview): Promise<Interview>;

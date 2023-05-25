@@ -1,9 +1,9 @@
 import { User } from "../../entities/user";
-import { UserRepository } from "@repositories/user-repository";
 import { hashSync } from "bcrypt";
 import { FieldValidation } from "../../../utils/validation/field-validation";
 import { AppError } from "../../../infra/http/errors/app-error";
 import { UserAppToInfra } from "../../mappers/user_app_mapper";
+import { UserRepository } from "../../repositories/user-repository";
 
 interface IRegisterUseCaseProps {
     name: string;

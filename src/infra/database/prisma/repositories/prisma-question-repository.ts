@@ -7,6 +7,28 @@ export class PrismaQuestionRepository extends QuestionRepository {
     findById(id: string): Promise<Question> {
         throw new Error("Method not implemented.");
     }
+
+    async delete(id: string): Promise<void> {
+        await prisma.question.delete({
+            where: {
+                id
+            }
+        })
+    }
+
+    async clear(): Promise<void> {
+        // const questions = await prisma.question.findMany();
+        // for (var i = 0; i < questions.length; i++) {
+        //     // await prisma.question.delete({
+        //     //     where: {
+        //     //         id: questions[i].id
+        //     //     }
+        //     // })
+        // }
+
+        await prisma.question.deleteMany();
+    }
+
     async save(question: Question): Promise<Question> {
         const newQuestion = await prisma.question.create({
             data: {
