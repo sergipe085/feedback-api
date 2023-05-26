@@ -27,6 +27,8 @@ model interview {
 }
 
 model question {
-  id      String @id @default(uuid())
-  content String
+  id         String    @id @default(uuid())
+  content    String
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
 }

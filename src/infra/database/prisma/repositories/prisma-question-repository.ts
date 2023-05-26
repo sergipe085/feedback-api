@@ -4,14 +4,21 @@ import { DomainToPrisma, PrismaToDomain } from "../../../../utils/mappers/questi
 import prisma from "..";
 
 export class PrismaQuestionRepository extends QuestionRepository {
-    findById(id: string): Promise<Question> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<Question | null> {
+        return prisma.question.findFirst({
+            where: {
+                id: id ?? ""
+            }
+        })
     }
 
     async delete(id: string): Promise<void> {
-        await prisma.question.delete({
+        await prisma.question.update({
             where: {
                 id
+            },
+            data: {
+                deleted_at: new Date()
             }
         })
     }
@@ -26,7 +33,11 @@ export class PrismaQuestionRepository extends QuestionRepository {
         //     // })
         // }
 
-        await prisma.question.deleteMany();
+        await prisma.question.updateMany({
+            data: {
+                deleted_at: new Date()
+            }
+        });
     }
 
     async save(question: Question): Promise<Question> {
@@ -51,7 +62,11 @@ export class PrismaQuestionRepository extends QuestionRepository {
     }
 
     async findAll(): Promise<Question[]> {
-        var questions = await prisma.question.findMany();
+        var questions = await prisma.question.findMany({
+            where: {
+                deleted_at: null
+            }
+        });
         var _questions = questions.map(f => PrismaToDomain(f))
         return _questions;
     }

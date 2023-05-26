@@ -13,7 +13,9 @@ export class AddQuestion {
 
     async execute({ content }: IAddQuestionUseCaseProps) {
         const new_question = new Question({
-            content
+            content,
+            created_at: new Date(),
+            deleted_at: null
         });
 
         const saved_question = await this.questionRepository.save(new_question)

@@ -8,6 +8,7 @@ import { PrismaResponseRepository } from "../../database/prisma/repositories/pri
 import { ListQuestions } from "../../../app/use-cases/feedback/list-questions";
 import { DeleteQuestion } from "../../../app/use-cases/feedback/delete-question";
 import { ClearQuestion } from "../../../app/use-cases/feedback/clear-questions";
+import { ListInterview } from "../../../app/use-cases/feedback/list-interview";
 
 const quiz_routes = Router();
 
@@ -49,6 +50,14 @@ quiz_routes.delete("/question", middlewares.useAuth, async (req, res) => {
 
     return res.json(response);
 });
+
+quiz_routes.get("/interview", middlewares.useAuth, async (req, res) => {
+    const list_interview = new ListInterview(responseRepository, interviewRepository, questionRepository);
+
+    const response = await list_interview.execute({interviewId: "1"});
+
+    return res.json(response);
+})
 
 quiz_routes.post("/response", async (req, res) => {
     const { responses } = req.body;
