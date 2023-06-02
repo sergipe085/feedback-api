@@ -9,6 +9,7 @@ import { ListQuestions } from "../../../app/use-cases/feedback/list-questions";
 import { DeleteQuestion } from "../../../app/use-cases/feedback/delete-question";
 import { ClearQuestion } from "../../../app/use-cases/feedback/clear-questions";
 import { ListInterview } from "../../../app/use-cases/feedback/list-interview";
+import { GetResponses } from "../../../app/use-cases/feedback/get-responses";
 
 const quiz_routes = Router();
 
@@ -61,10 +62,19 @@ quiz_routes.get("/interview", middlewares.useAuth, async (req, res) => {
 
 quiz_routes.post("/response", async (req, res) => {
     const { responses } = req.body;
+    console.log(req.body);
 
     const response_quiz = new ResponseQuiz(interviewRepository, questionRepository, responseRepository);
 
     const response = await response_quiz.execute({ responses });
+
+    return res.json(response);
+});
+
+quiz_routes.get("/response", async (req, res) => {
+    const get_resposes = new GetResponses(questionRepository, responseRepository);
+
+    const response = await get_resposes.execute();
 
     return res.json(response);
 });

@@ -4,8 +4,17 @@ import { DomainToPrisma, PrismaToDomain } from "../../../../utils/mappers/interv
 import prisma from "..";
 
 export class PrismaResponseRepository extends ResponseRepository {
+    async findByQuestionId(questionId: string): Promise<Response[]> {
+        const responses = await prisma.response.findMany({
+            where: {
+                question_id: questionId
+            }
+        })
+
+        return responses
+    }
     async findByInterviewId(interviewId: number): Promise<Response[]> {
-        const responses = prisma.response.findMany({
+        const responses = await prisma.response.findMany({
             where: {
                 interview_id: interviewId
             }

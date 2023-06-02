@@ -7,6 +7,8 @@ import { AppError } from "../errors/app-error";
 export async function useAuth(req: Request, res: Response, next: NextFunction) {
     var authToken = req.headers.authorization;
 
+    console.log(authToken);
+    
     if (!authToken) {
         throw new AppError("not authenticated", 401);
     }
@@ -14,9 +16,12 @@ export async function useAuth(req: Request, res: Response, next: NextFunction) {
     const userToken = authToken.split(" ")[1];
     const tokenPayload: any = jwt.verify(userToken, process.env.JWT_SECRET ?? "");
 
+    console.log(tokenPayload);
+
     if (!tokenPayload.email) {
         throw new AppError("not authenticated", 401);
     }
+
 
     const usersRepository: UserRepository = new PrismaUserRepository();
 

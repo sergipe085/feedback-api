@@ -23,6 +23,8 @@ export class ResponseQuiz {
     async execute({ responses }: IResponseQuizUseCase) {
         const interview = await this.interviewRepository.save(new Interview({}));
 
+        console.log(responses);
+
         const saved_responses = [] as Response[]
 
         for (var i = 0; i < responses.length; i++) {
