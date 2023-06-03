@@ -20,6 +20,7 @@ interface IResponse {
     good: number;
     medium: number;
     bad: number;
+    obs: string[]
 }
 
 export class GetResponses {
@@ -37,6 +38,7 @@ export class GetResponses {
             var good = 0;
             var medium = 0;
             var bad = 0;
+            var obs: string[] = [];
 
             for (var j = 0; j < responses.length; j++) {
                 if (responses[j].note == 1) {
@@ -48,13 +50,19 @@ export class GetResponses {
                 else if (responses[j].note == 3) {
                     good += 1
                 }
+
+                if (responses[j].obs) {
+                    obs.push(responses[j].obs)
+                }
             }
+        
 
             response.push({
                 question: questions[i].content,
                 bad,
                 medium,
-                good
+                good,
+                obs
             })
         }       
         return {
