@@ -15,7 +15,7 @@ routes.get("/auth", middlewares.useAuth, (req, res) => {
     return res.json("AUTH")
 })
 
-routes.get("/", (req, res) => {
+routes.get("/test", (req, res) => {
     return res.json("OK");
 })
 
